@@ -1,0 +1,55 @@
+.container{
+    width: 73%;
+    position: absolute;
+    top: 100px;
+    right: 2.5%;
+    height: 100vh;
+    margin: auto;
+}
+.container div{
+    background-color: #27283C;
+    border-radius: 20px;
+}
+.diagram{
+    position: absolute;
+    height: 77%;
+    margin-top: 20px;
+    padding: 10px;
+    width: 45%;
+    margin: auto;
+}
+.diagramRestaurant{
+    height: 77%;
+    width: 52%;
+    position: absolute;
+    right: 0;
+}
+.diagramList{
+    position: absolute;
+    right: 0;
+    left: 0;
+    top: 80%;
+    bottom: 10px;
+    margin-top: 20px;
+    padding: 20px;
+    height: 50%;
+}
+@media (max-width:600px) {
+    .container{
+        left: 0;
+        right: 0;
+    }
+    .diagram{
+        width: 100%;
+        left: 0;
+    }
+    .diagramRestaurant{
+        top: 80%;
+        height: 60%;
+        width: 100%;
+    }
+    .diagramList{
+        top: 140%;
+        height: 60%;
+    }
+}

@@ -1,0 +1,96 @@
+.container{
+    position: absolute;
+    width: 70%;
+    right: 2.5%;
+    top: 100px;
+}
+.restuarantHead{
+    background-color: #27283C;
+    border-radius: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+}
+.restuarantHead h2{
+    color: #F2F2F2;
+    font-weight: 600;
+    font-size: 25px;
+}
+.restuarantHead select{
+    background-color:  #5A5B70;
+    color: #f2f2f2;
+    border-radius: 20px;
+    font-size: 16px;
+    padding: 5px;
+    border: 1px solid #5A5B70;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items:center ;
+}
+.restuarantHead .rightSide{
+    display: flex;
+    gap: 10px;
+}
+.rightSide button{
+    padding: 10px;
+    border-radius: 20px;
+    font-size: 15px;
+    background-color: #C035A2;
+    border:2px solid #C035A2;
+    cursor: pointer;
+    color: #FFF;
+    font-weight: 700;
+    width: 250px;
+}
+.rightSide button:hover{
+    background-color: #ab2b8f;
+    border:2px solid #ab2b8f;
+}
+.restuarantsList{
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    gap: 50px;
+    margin-top: 80px;
+}
+.restuarantCard{
+    width: 30%;
+    display: flex;
+    background-color: #FFF;
+    justify-content: space-around;
+    padding: 10px;
+}
+
+.otherDiv{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.actions{
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+}
+.actions img{
+    cursor: pointer;
+}
+@media (max-width:600px) {
+    .container{
+        width:90% ;
+        right: 0;
+        left: 0;
+        margin: 0 auto;
+        
+    }
+    
+    .restuarantCard{
+        width: 80%;
+        margin: 0 auto;
+    }
+    .rightSide button{
+        width: 100px;
+    }
+}

@@ -1,0 +1,181 @@
+.container{
+    position: absolute;
+    width: 70%;
+    right: 2.5%;
+    top: 100px;
+}
+.productHead{
+    background-color: #27283C;
+    border-radius: 20px;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    padding: 20px;
+}
+.productHead h2{
+    color: #f2f2f2;
+    font-size: 25px;
+    font-weight: 600;
+}
+.productHead select{
+    background-color:  #5A5B70;
+    color: #f2f2f2;
+    border-radius: 20px;
+    font-size: 15px;
+    padding: 5px;
+    border: 1px solid #5A5B70;
+}
+.productMain{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin: 100px auto;
+    justify-content: center;
+}
+.productDiv{
+    background-color: #FFF;
+    display: flex;
+    padding: 10px;
+    gap: 5px;
+    /* height: 33vh; */
+    border: 1px solid #cecece;
+}
+.productDiv h3{
+    font-size: 23px;
+}
+.restaurant{
+    font-size: 18px;
+    color: #8E8E93;
+}
+.price{
+    font-size: 15px;
+    color:#00B2A9;
+}
+.productImg{
+    width: 130px;
+    height: 130px;
+    margin: 0 auto;
+}
+.updateDiv{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 35px;
+}
+.updateDiv div{
+    display: flex;
+    gap: 2px;
+}
+.updateImg{
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+}
+.updateImg:hover{
+    width: 35px;
+    height: 35px;
+    transition: width 0.3s, height 0.3s;
+    
+}
+
+.delete{
+    background-color: #FFF;
+    position: absolute;
+    width: 25%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 99999999999;
+    left: 0;
+    right: 0;
+    margin: auto;
+    top: 0;
+    bottom: 0;
+    height: 30%;
+    padding: 10px;
+    gap: 10px;
+}
+.delete h2{
+    font-weight: 600;
+    font-size: 25px;
+
+}
+.delete p{
+    color:#4F4F4F;
+    text-align: center;
+}
+.delete div{
+    display: flex;
+    gap: 20px;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+}
+.delete button{
+    font-size: 20px;
+    padding: 10px;
+    cursor: pointer;
+}
+.cancelDelete{
+    color: #BDBDBD;
+    background-color: #FFF;
+    border: 2px solid #BDBDBD;
+}
+.deletBtn{
+    color: #FFF;
+    background-color:#D63626;
+    border: 1px solid #D63626;
+}
+.backFont{
+    background-color: #00000066;
+    position: absolute;
+    z-index: 99999999;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+}
+
+@media (max-width:600px) {
+    .container{
+        width: 90%;
+        margin: 0 auto;
+        right: 0;
+        left: 0;
+    }
+    .delete{
+        width: 80%;
+    }
+    .delete div{
+        flex-direction: column;
+    }
+    .delete button{
+        width: 80%;
+    }
+}
+.slider {
+    font-size: 18px; 
+    border: 1px solid blueviolet;
+    border-radius: 50%; /* Fully round the border */
+    width: 50px;
+    height: 50px;
+    background-color: #1E1E30;
+    color: blueviolet;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+
+  }
+  
+  .dotsContainer {
+    width: 100px;
+    height: 100px;
+    top: 5px;
+    position: absolute;
+  }
+  .productMain div ul li{
+    width: 47px !important;
+  }
+  

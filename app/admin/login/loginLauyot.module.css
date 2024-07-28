@@ -1,0 +1,11 @@
+.header{
+    display: flex;
+}
+.h{
+    font-size: 32px;
+    color: #FFF;
+    margin: 20px;
+}
+.h span{
+    color: orange;
+}

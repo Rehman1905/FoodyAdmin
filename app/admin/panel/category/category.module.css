@@ -1,0 +1,74 @@
+.container {
+    position: absolute;
+    width: 70%;
+    right: 2.5%;
+    top: 100px;
+
+}
+
+.categoryHead {
+    background-color: #27283C;
+    border-radius: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 20px;
+}
+
+.categoryHead h2 {
+    color: #f2f2f2;
+    font-size: 25px;
+    font-weight: 600;
+}
+
+.categoryHead button {
+    border-radius: 20px;
+    background-color: #C035A2;
+    border: 2px solid #C035A2;
+    color: #FFF;
+    font-size: 20px;
+    padding: 10px;
+    cursor: pointer;
+}
+
+.categoryHead button:hover {
+    background-color: #ab2b8f;
+    border: 2px solid #ab2b8f;
+}
+
+.categoryMain {
+    display: flex;
+    flex-direction: column;
+    margin: 20px auto;
+    background-color: #FFF;
+    max-height: 68vh;
+    overflow-y: auto;
+}
+
+.categoryMain td {
+    font-size: 20px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+.categoryMain tbody{
+    display: flex;
+    flex-direction:column ;
+}
+.tr{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.button {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 10px;
+}
+
+@media (max-width:600px) {
+    .container {
+        width: 95%;
+    }
+}

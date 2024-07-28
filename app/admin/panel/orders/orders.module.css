@@ -1,0 +1,57 @@
+.container {
+    position: absolute;
+    width: 70%;
+    right: 2.5%;
+    top: 100px;
+
+}
+
+.ordersHead {
+    background-color: #27283C;
+    border-radius: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 20px;
+}
+
+.ordersHead h2 {
+    color: #f2f2f2;
+    font-size: 25px;
+    font-weight: 600;
+}
+
+
+.ordersMain {
+    display: flex;
+    flex-direction: column;
+    margin: 20px auto;
+    background-color: #FFF;
+    max-height: 70vh;
+    overflow-y: auto;
+    padding: 5px;
+}
+
+.ordersMain td, .ordersMain th{
+    font-size: 15px;
+    padding: 10px;
+}
+
+
+.tr{
+    display: flex;
+    justify-content: space-around;
+}
+.ordersMain tbody{
+    display: flex;
+    flex-direction: column;
+}
+.bin{
+    cursor: pointer;
+}
+@media (max-width:600px) {
+    .container{
+        width: 95%;
+    }
+}
