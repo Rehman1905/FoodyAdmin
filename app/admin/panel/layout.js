@@ -25,7 +25,13 @@ export default function AdminLayput({ children }) {
     const [greyFont, setGreyFont] = useState(false)
     const [newData, setNewdata] = useContext(dataContext)
     const [product, setProduct] = useState(false)
-
+    const router=useRouter()
+    useEffect(()=>{
+        const token=localStorage.getItem('access_token')
+        if(!token){
+            router.push('/')
+        }
+    },[])
     useEffect(() => {
         const handleResize = () => {
             const isSmall = window.innerWidth <= 600;
@@ -68,6 +74,26 @@ export default function AdminLayput({ children }) {
         setProduct(true)
         document.body.style.overflow = 'hidden';
     },)
+    const menuRef=useRef()
+    useEffect(() => {
+        if(isSmallScreen){
+        const handleClick = (event) => {
+          if (menuRef.current && !menuRef.current.contains(event.target)) {
+            setGreyFont(false)
+            setDisplay(false)
+            document.body.style.overflow = 'auto';
+          }
+        };
+    
+        document.addEventListener('mousedown', handleClick);
+    
+        return () => {
+          document.removeEventListener('mousedown', handleClick);
+        };
+    }else{
+        return
+    }
+      }, []);
 
     return (
         <>
@@ -89,8 +115,8 @@ export default function AdminLayput({ children }) {
                 </div>
             </header>
             <div className={style.navDiv}>
-                <nav style={{ display: display ? 'block' : 'none' }} className={`${isSmallScreen ? style.smallNav : style.navigation}`}>
-                    <div className={style.navContainer}>
+                <nav style={{ display: display ? 'block' : 'none' }} className={`${greyFont ? style.smallNav : style.navigation}`}>
+                    <div className={style.navContainer} ref={menuRef}>
                         <Image style={{ display: isSmallScreen ? 'block' : 'none' }} onClick={back} className={style.back} alt='back' src={backImg} />
                         <div style={{ backgroundColor: color == '/admin/panel' ? '#d172ee' : '#C74FEB' }}>
                             <Image alt='dashboard' src={dashboard} />
@@ -122,7 +148,7 @@ export default function AdminLayput({ children }) {
                         </div>
                         <div style={{ backgroundColor: color == '/admin/panel/logout' ? '#d172ee' : '#C74FEB' }}>
                             <Image alt='logout' src={logout} />
-                            <Link onClick={back} className={style.linkNav} href={'/admin/login'}>Logout</Link>
+                            <Link onClick={back} className={style.linkNav} href={'/'}>Logout</Link>
                         </div>
                     </div>
                 </nav>
@@ -132,6 +158,9 @@ export default function AdminLayput({ children }) {
                 <div>
                     {children}
                 </div>
+            </div>
+            <div style={{display:greyFont?'block':'none'}} className={style.gray}>
+                
             </div>
         </>
     )

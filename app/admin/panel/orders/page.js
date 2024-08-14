@@ -4,111 +4,36 @@ import style from './orders.module.css'
 import eye from './image/eye.png'
 import bin from './image/bin.png'
 import Image from 'next/image'
+import Show from './product'
 import styleDelet from '../products/products.module.css'
-import { useCallback, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
+import axios from 'axios'
+import spinGif from '../image/spin.gif'
 export default function Orders() {
-    const orders = [
-        {
-            id: '9177',
-            customerId: '010101',
-            time: '25 Dec 2021',
-            deliveryAddres: 'General Eliaqa Shiklisiki 2A men 39',
-            amount: '249$',
-            paymendMehtond: 'cash On Delievery',
-            constact: '994-51-419-31-30',
-            eye: true
-        }, {
-            id: '9178',
-            customerId: '010101',
-            time: '25 Dec 2021',
-            deliveryAddres: 'General Eliaqa Shiklisiki 2A men 39',
-            amount: '249$',
-            paymendMehtond: 'cash On Delievery',
-            constact: '994-51-419-31-30',
-            eye: true
-        }
-        , {
-            id: '9179',
-            customerId: '010101',
-            time: '25 Dec 2021',
-            deliveryAddres: 'General Eliaqa Shiklisiki 2A men 39',
-            amount: '249$',
-            paymendMehtond: 'cash On Delievery',
-            constact: '994-51-419-31-30',
-            eye: false
-        }
-        , {
-            id: '9180',
-            customerId: '010101',
-            time: '25 Dec 2021',
-            deliveryAddres: 'General Eliaqa Shiklisiki 2A men 39',
-            amount: '249$',
-            paymendMehtond: 'cash On Delievery',
-            constact: '994-51-419-31-30',
-            eye: true
-        }
-        , {
-            id: '9181',
-            customerId: '010101',
-            time: '25 Dec 2021',
-            deliveryAddres: 'General Eliaqa Shiklisiki 2A men 39',
-            amount: '249$',
-            paymendMehtond: 'cash On Delievery',
-            constact: '994-51-419-31-30',
-            eye: false
-        }
-        , {
-            id: '9182',
-            customerId: '010101',
-            time: '25 Dec 2021',
-            deliveryAddres: 'General Eliaqa Shiklisiki 2A men 39',
-            amount: '249$',
-            paymendMehtond: 'cash On Delievery',
-            constact: '994-51-419-31-30',
-            eye: false
-        }, {
-            id: '9183',
-            customerId: '010101',
-            time: '25 Dec 2021',
-            deliveryAddres: 'General Eliaqa Shiklisiki 2A men 39',
-            amount: '249$',
-            paymendMehtond: 'cash On Delievery',
-            constact: '994-51-419-31-30',
-            eye: false
-        }
-        , {
-            id: '9184',
-            customerId: '010101',
-            time: '25 Dec 2021',
-            deliveryAddres: 'General Eliaqa Shiklisiki 2A men 39',
-            amount: '249$',
-            paymendMehtond: 'cash On Delievery',
-            constact: '994-51-419-31-30',
-            eye: false
-        }
-        , {
-            id: '9185',
-            customerId: '010101',
-            time: '25 Dec 2021',
-            deliveryAddres: 'General Eliaqa Shiklisiki 2A men 39',
-            amount: '249$',
-            paymendMehtond: 'cash On Delievery',
-            constact: '994-51-419-31-30',
-            eye: false
-        }
-        , {
-            id: '9186',
-            customerId: '010101',
-            time: '25 Dec 2021',
-            deliveryAddres: 'General Eliaqa Shiklisiki 2A men 39',
-            amount: '249$',
-            paymendMehtond: 'cash On Delievery',
-            constact: '994-51-419-31-30',
-            eye: false
-        }
-    ]
+    const [orders, setOrders] = useState([])
+    const [deletId, setDeletId] = useState('')
+    const [spin, setSpin] = useState(true)
+    const [product, setProduct] = useState({
+        display: false,
+        data: []
+    })
+    const authorization = localStorage.getItem('access_token');
+
+    const fetchOrders = async () => {
+        const response = await axios.get('/api/order', {
+            headers: {
+                Authorization: `Bearer ${authorization}`
+            }
+        });
+        setSpin(false)
+        setOrders(response);
+    }
+    useEffect(() => {
+        fetchOrders()
+    }, [])
     const [delet, setDelet] = useState(false)
-    const deleteBtn = useCallback(() => {
+    const deleteBtn = useCallback((id) => {
+        setDeletId(id)
         setDelet(true)
         document.body.style.overflow = 'hidden'
     }, [])
@@ -116,54 +41,61 @@ export default function Orders() {
         setDelet(false)
         document.body.style.overflow = 'auto'
     }, [])
+    const showOrder = useCallback((products) => {
+        setProduct({
+            display: true,
+            data: products
+        }
+        )
+    })
+    const deleteOrder = useCallback(async () => {
+        setSpin(true)
+        setDelet(false)
+        await axios.delete('/api/order', {
+            headers: {
+                Authorization: `Bearer ${authorization}`
+            },
+            data: {
+                order_id: deletId
+            }
+        });
+        fetchOrders();
+    }, [authorization]);
     return (
         <>
-            <div className={style.container}>
-                <div className={style.ordersHead}>
-                    <h2>Orders</h2>
-                </div>
-                <div className={style.ordersMain}>
-                    <tabel>
-                        <thead style={{ display: "flex", alignItems: 'center' }}>
-                            <tr style={{ width: '100%', display: "flex", justifyContent: 'space-around' }}>
-                                <th >ID</th>
-                                <th>Customer ID</th>
-                                <th >Time</th>
-                                <th >Delievery Address</th>
-                                <th >Amount</th>
-                                <th >Payment Medhtod</th>
-                                <th>Contact</th>
-                                <th style={{ width: '50px' }}></th>
+            <section className={style.sec} style={{ display: spin ? 'none' : 'flex' }} >
+                <h2>Your Orders</h2>
+                <table className={style.table}>
+                    <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>Customer Id</th>
+                            <th>Time</th>
+                            <th>Delivery Address</th>
+                            <th>Amount</th>
+                            <th>Payment Method</th>
+                            <th>Contact</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {orders.data?.result.data?.map((order, index) => (
+                            <tr key={index}>
+                                <td>{index + 1}</td>
+                                <td>{order.customer_id}</td>
+                                <td>{orders.headers.date.slice(4, 16)}</td>
+                                <td style={{ maxWidth: '200px' }}>{order.delivery_address}</td>
+                                <td>{order.amount}</td>
+                                <td>{order.payment_method == 0 ? 'Cash On Delivery' : 'Pay at the door by credit card'}</td>
+                                <td>{order.contact}</td>
+                                <td><Image onClick={() => showOrder(order.products)} src={eye} alt="Eye Icon" width={20} height={20} /></td>
+                                <td>
+                                    <Image onClick={() => deleteBtn(order.id)} className={style.bin} src={bin} alt="Bin Icon" width={20} height={20} />
+                                </td>
                             </tr>
-                        </thead>
-                        <hr />
-                        <tbody >
-                            {orders.map(order => (
-                                <>
-                                    <tr className={style.tr}>
-                                        <td>{order.id}</td>
-                                        <td>{order.customerId}</td>
-                                        <td>{order.time}</td>
-                                        <td style={{ width: '150px' }}>{order.deliveryAddres}</td>
-                                        <td>{order.amount}</td>
-                                        <td style={{width:'100px'}}>{order.paymendMehtond}</td>
-                                        <td>{order.constact}</td>
-                                        <td style={{ display: 'flex', gap: '5px', width: '50px' }}>
-                                            {order.eye === true ? (
-                                                <Image src={eye} alt="Eye Icon" width={30} height={30} />
-                                            ) : null}
-                                            <Image onClick={deleteBtn} className={style.bin} src={bin} alt="Bin Icon" width={30} height={30} />
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <hr />
-                                    </tr>
-                                </>
-                            ))}
-                        </tbody>
-                    </tabel>
-                </div>
-            </div>
+                        ))}
+                    </tbody>
+                </table>
+            </section>
             <div>
                 <div style={{ width: '100%', height: '100vh', display: delet ? 'flex' : 'none' }}>
                     <div className={styleDelet.delete}>
@@ -171,11 +103,15 @@ export default function Orders() {
                         <p>Attention! If you delete this product, it will not come back...</p>
                         <div>
                             <button className={styleDelet.cancelDelete} onClick={cancelBtn}>Cancel</button>
-                            <button className={styleDelet.deletBtn}>Delete</button>
+                            <button onClick={deleteOrder} className={styleDelet.deletBtn}>Delete</button>
                         </div>
                     </div>
                 </div>
                 <div style={{ display: delet ? 'flex' : 'none' }} className={styleDelet.backFont}></div>
+            </div>
+            <Show setProduct={setProduct} product={product} />
+            <div className={style.spinDiv} style={{ display: spin ? 'flex' : 'none' }} >
+                <Image src={spinGif} alt='spin' className={style.spin} width={800} height={700} />
             </div>
         </>
     )

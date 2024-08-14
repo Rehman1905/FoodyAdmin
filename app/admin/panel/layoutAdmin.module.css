@@ -69,6 +69,9 @@
 .navDiv{
     width: 95%;
     margin: 0 auto;
+    /* position: fixed; */
+    z-index: 99999999999;
+    /* left: 2.5%; */
 }
 .navigation{
     width: 20%;
@@ -157,7 +160,8 @@
     }
 }
 .smallNav{
-    animation: slideIn 0.5s forwards;    
+    animation: slideIn 0.5s forwards; 
+    position: fixed;  
 }
 
 
@@ -170,7 +174,7 @@
     padding: 20px;
     height: 100vh;
     overflow-y: scroll;
-    
+    animation: slideIn 0.5s forwards; 
 }
 .addContainer::-webkit-scrollbar {
     width: 6px;
@@ -353,4 +357,48 @@
         align-items: center;
         gap: 20px;
     }
+}
+.gray{
+    width: 30%;
+    height: 100vh;
+    background-color: rgba(0,0,0,0.5);
+    position: fixed;
+    right: 0;
+    z-index: 999999;
+    animation: slideIn 0.5s forwards; 
+
+}
+.addContainer p{
+    font-size: 20px;
+    color: red;
+}
+@keyframes moveBox {
+    0% {
+        left: -100px; 
+        opacity: 0; 
+      }
+      33% {
+        left: calc(50% - 50px);
+        opacity: 1;
+      }
+      66% {
+        left: calc(50% - 50px);
+        opacity: 1; 
+      }
+      100% {
+        left: 100%; 
+        opacity: 0; 
+      }
+  }
+.alert{
+    position: absolute;
+    right: 0;
+    top: 0;
+    z-index: 9999999999999999;
+    width: 300px;
+    transform: translateY(-50%);
+    opacity: 0; 
+    animation: moveBox 2.3s linear forwards;
+    padding: 30px;
+    font-size: 25px;
 }

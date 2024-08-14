@@ -12,14 +12,22 @@ import { useDispatch, useSelector } from 'react-redux'
 import Product from '../addProduct'
 import axios from 'axios'
 import { deleteOfferData } from '../../../features/offerSlice'
+import spinGif from '../image/spin.gif'
+
 export default function Offers() {
-    const [offers,setOffers] =useState([])
-    const [deleteOfferId,setDeleteOfferId]=useState('')
-    const dispatch=useDispatch()
-    const dataOffer=useSelector(state=>state.offer.data)
-    useEffect(()=>{
-        dataOffer.then(result=>setOffers(result))
-    },[dataOffer])
+    const [offers, setOffers] = useState([])
+    const [spin, setSpin] = useState(true)
+    const [deleteOfferId, setDeleteOfferId] = useState('')
+    const dispatch = useDispatch()
+    const dataOffer = useSelector(state => state.offer.data)
+    useEffect(() => {
+        const fetchOffer=async()=>{
+            await dataOffer.then(result => setOffers(result))
+            setSpin(false)
+        }
+        fetchOffer()
+
+    }, [dataOffer])
     const [delet, setDelet] = useState(false)
     const deleteBtn = useCallback((id) => {
         setDeleteOfferId(id)
@@ -32,62 +40,56 @@ export default function Offers() {
     }, [])
     const [newData, setNewData] = useContext(dataContext);
     const editOffer = useCallback((id) => {
-        const editToOffer=offers.find(offer=>offer.id===id)
+        const editToOffer = offers.find(offer => offer.id === id)
         setNewData({
-            display:true,
-            data:'Edit Offer',
-            editData:editToOffer
+            display: true,
+            data: 'Edit Offer',
+            editData: editToOffer
         })
     }, [newData])
     const addOffer = useCallback(() => {
         setNewData({
-            display:true,
-            data:'Add Offer'
+            display: true,
+            data: 'Add Offer'
         })
     }, [newData])
-    const deleteOffer=useCallback(async()=>{
+    const deleteOffer = useCallback(async () => {
         await axios.delete(`/api/offer/${deleteOfferId}`)
         cancelBtn()
         dispatch(deleteOfferData())
-    },[deleteOfferId])
+    }, [deleteOfferId])
     return (
         <>
-            <div className={style.container}>
+            <div className={style.container}  >
                 <div className={style.offerHead}>
                     <h2>Offers</h2>
                     <button onClick={addOffer}>+<span>Add Offer</span></button>
                 </div>
-                <div className={style.offerMain}>
-                    <table>
+                <div style={{ display: spin ? 'none' : 'block' }} className={style.offerMain}>
+                    <table className={style.table}>
                         <thead >
-                            <tr style={{display:'flex',justifyContent:'space-around'}}>
-                                <td>ID</td>
-                                <td>Image</td>
-                                <td>Title</td>
-                                <td>Descriptiions</td>
-                                <td style={{width:'60px'}}></td>
+                            <tr >
+                                <th>ID</th>
+                                <th>Image</th>
+                                <th>Title</th>
+                                <th>Descriptiions</th>
+                                <th style={{ width: '60px' }}></th>
                             </tr>
                         </thead>
-                        <hr />
-                        
+
                         <tbody>
 
-                            {offers.map((offer,index) => (
-                                <>
+                            {offers.map((offer, index) => (
                                     <tr className={style.tr}>
-                                        <td className={style.data}>{index+1}</td>
+                                        <td className={style.data}>{index + 1}</td>
                                         <td className={style.data}><Image src={offer.img_url} alt='category' width={50} height={50} /></td>
                                         <td className={style.data}>{offer.name}</td>
                                         <td className={style.data}>{offer.description}</td>
                                         <td className={style.button}>
-                                            <Image style={{ cursor: 'pointer' }} onClick={()=>editOffer(offer.id)} src={editImg} alt='edit' width={30} height={30} />
-                                            <Image style={{ cursor: 'pointer' }} onClick={()=>deleteBtn(offer.id)} src={deleteImg} alt='delete' width={30} height={30} />
+                                            <Image style={{ cursor: 'pointer' }} onClick={() => editOffer(offer.id)} src={editImg} alt='edit' width={30} height={30} />
+                                            <Image style={{ cursor: 'pointer' }} onClick={() => deleteBtn(offer.id)} src={deleteImg} alt='delete' width={30} height={30} />
                                         </td>
                                     </tr>
-                                    <tr>
-                                        <hr />
-                                    </tr>
-                                </>
                             ))}
                         </tbody>
 
@@ -96,7 +98,7 @@ export default function Offers() {
                 </div>
             </div>
             <div>
-                <Product/>
+                <Product />
             </div>
             <div>
                 <div style={{ width: '100%', height: '100vh', display: delet ? 'flex' : 'none' }}>
@@ -110,6 +112,9 @@ export default function Offers() {
                     </div>
                 </div>
                 <div style={{ display: delet ? 'flex' : 'none' }} className={styleDelet.backFont}></div>
+            </div>
+            <div className={style.spinDiv} style={{ display: spin ? 'flex' : 'none' }} >
+                <Image src={spinGif} alt='spin' className={style.spin} width={600} height={500} />
             </div>
         </>
     )

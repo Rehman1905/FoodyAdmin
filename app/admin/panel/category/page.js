@@ -65,24 +65,23 @@ export default function Category() {
                     <button onClick={addCategory}>+<span>Add Category</span></button>
                 </div>
                 <div className={style.categoryMain}>
-                    <table>
+                    <table className={style.table}>
                         <thead >
-                            <tr style={{display:'flex',justifyContent:'space-around'}}>
+                            <tr >
                                 <td>ID</td>
                                 <td>Image</td>
                                 <td>Name</td>
                                 <td>Slug</td>
-                                <td style={{width:'60px'}}></td>
+                                <td></td>
                             </tr>
                         </thead>
-                        <hr />
                         
                         <tbody>
 
                             {categories.map((category,index) => (
                                 
                                 <>
-                                    <tr className={style.tr}>
+                                    <tr >
                                         <td className={style.data}>{index+1}</td>
                                         <td className={style.data}><Image src={category.img_url} alt='category' width={50} height={50} /></td>
                                         <td className={style.data}>{category.name}</td>
@@ -92,7 +91,6 @@ export default function Category() {
                                             <Image style={{ cursor: 'pointer' }} onClick={() => editCategory(category.id)} src={editImg} alt='edit' width={30} height={30} />
                                         </td>
                                     </tr>
-                                    <hr />
                                 </>
                             ))}
                         </tbody>

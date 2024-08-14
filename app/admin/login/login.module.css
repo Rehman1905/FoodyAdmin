@@ -4,6 +4,7 @@
     margin: 0 auto;
     justify-content: center;
     align-items: center;
+    height: 100vh;
 }
 .form{
     width: 40%;
@@ -67,6 +68,10 @@
     width:  85%;
     height: 100%;
 }
+.form p{
+    color: red;
+    font-size: 15px;
+}
 @media (max-width:1130px  )and (min-width:657px){
     .container{
         flex-direction: column-reverse;
@@ -92,6 +97,7 @@
     .container{
         flex-direction: column-reverse;
         gap: 10px;
+        height: auto;
     }
     .form{
         gap: 10px;
@@ -111,5 +117,38 @@
         font-size: 25px;
         width: 80%;
     }
-    
+    .form p{
+        width: 80%;
+        text-align: center;
+    }
+}
+@keyframes moveBox {
+    0% {
+        left: -100px; 
+        opacity: 0; 
+      }
+      33% {
+        left: calc(50% - 50px);
+        opacity: 1;
+      }
+      66% {
+        left: calc(50% - 50px);
+        opacity: 1; 
+      }
+      100% {
+        left: 100%; 
+        opacity: 0; 
+      }
+  }
+.alert{
+    position: absolute;
+    right: 0;
+    top: 0;
+    z-index: 9999;
+    width: 300px;
+    transform: translateY(-50%);
+    opacity: 0; 
+    animation: moveBox 2.3s linear forwards;
+    padding: 30px;
+    font-size: 25px;
 }
