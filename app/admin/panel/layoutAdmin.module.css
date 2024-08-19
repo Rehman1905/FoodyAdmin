@@ -110,6 +110,7 @@
 .back{
     cursor: pointer;
     margin-top: 20px;
+    display: none;
 }
 .smallNav{
     width: 70%;
@@ -131,7 +132,16 @@
     background-color: #00000066;
     display: none;
 }
+.grayNav{
+    display: block;
+}
 @media (max-width:600px){
+    .grayNav{
+        display: none;
+    }
+    .back{
+        display: block;
+    }
     .hamburger{
         display: block;
     }
@@ -307,6 +317,7 @@
     width: 50px;
     height: 50px;
     cursor: pointer;
+    display: none;
 }
 .exit:hover{
     width: 60px;
@@ -314,6 +325,9 @@
     transition: width 0.3s, height 0.3s;
 }
 @media (max-width:600px){
+    .exit{
+        display: flex;
+    }
     .addButtonDiv button{
         font-size: 20px;
     }

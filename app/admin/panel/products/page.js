@@ -119,7 +119,7 @@ export default function Products() {
                     </select>
                 </div>
                 <div className={style.productMain}>
-                    <Slider {...settings}>
+                    <Slider style={{display:filterProduct.length<4?'none':'block'}} {...settings}>
                         {filterProduct.map(product => (
                             <div className={style.productDiv} key={(product.id)}>
                                 <Image alt='product' className={style.productImg} src={product.img_url} width={130} height={130} />
@@ -135,6 +135,22 @@ export default function Products() {
                             </div>
                         ))}
                     </Slider>
+                </div>
+                <div style={{display:filterProduct.length<4?'flex':'none'}} className={`${style.productMain} ${style.productMainSame}`}>
+                        {filterProduct.map(product => (
+                            <div className={style.productDiv} key={(product.id)}>
+                                <Image alt='product' className={style.productImg} src={product.img_url} width={130} height={130} />
+                                <h3>{product.name}</h3>
+                                <p className={style.restaurant}>{product.restaurant}</p>
+                                <div className={style.updateDiv}>
+                                    <p className={style.price}>{product.price}$</p>
+                                    <div >
+                                        <Image alt='edit' className={style.updateImg} onClick={() => editBtn(product.id)} src={editImg} />
+                                        <Image alt='deleteImg' className={style.updateImg} onClick={() => deleteBtn(product.id)} src={deleteImg} />
+                                    </div>
+                                </div>
+                            </div>
+                        ))}
                 </div>
             </div>
             <div className={style.editProduct}  >
@@ -154,6 +170,5 @@ export default function Products() {
                 <div style={{ display: delet ? 'flex' : 'none' }} className={style.backFont}></div>
             </div>
         </>
-
-    );
+    )
 }

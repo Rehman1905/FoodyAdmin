@@ -23,7 +23,7 @@ export default function Restuarants() {
     },[dataRestuarant])
 
     const [newData, setNewData] = useContext(dataContext);
-    const [isSmallScreen, setIsSmallScreen] = useState(false);
+    // const [isSmallScreen, setIsSmallScreen] = useState(false);
     const [delet, setDelet] = useState(false);
     const [restuarant,setRestuarant]=useState(false)
     const [deleteRestuarant,setDeleteRestuarant]=useState('')
@@ -32,18 +32,18 @@ export default function Restuarants() {
         setOption(e.target.value)
     }
     const dispatch=useDispatch()
-    useEffect(() => {
-        const handleResize = () => {
-            setIsSmallScreen(window.innerWidth <= 600);
-        };
+    // useEffect(() => {
+    //     const handleResize = () => {
+    //         setIsSmallScreen(window.innerWidth <= 600);
+    //     };
 
-        window.addEventListener('resize', handleResize);
-        handleResize();
+    //     window.addEventListener('resize', handleResize);
+    //     handleResize();
 
-        return () => {
-            window.removeEventListener('resize', handleResize);
-        };
-    }, []);
+    //     return () => {
+    //         window.removeEventListener('resize', handleResize);
+    //     };
+    // }, []);
 
     const addRestuarant = useCallback(() => {
         setNewData({
@@ -51,6 +51,7 @@ export default function Restuarants() {
             data:'Add Restuarant'
         });
         setRestuarant(true)
+        document.body.style.overflow = 'hidden';
     }, [setNewData]);
 
     const deletRestuarant = useCallback((id) => {
@@ -125,7 +126,7 @@ export default function Restuarants() {
                 </div>
             </div>
             <div>
-                <Product isSmallScreen={isSmallScreen} button={'Create Restuarant'} />
+                <Product button={'Create Restuarant'} />
             </div>
             
             <div>

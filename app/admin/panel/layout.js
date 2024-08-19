@@ -20,18 +20,18 @@ import { dataContext } from '../../context/context';
 
 export default function AdminLayput({ children }) {
     const color = usePathname()
-    const [display, setDisplay] = useState(window.innerWidth > 600);
+    const [display, setDisplay] = useState(window.innerWidth >= 600);
     const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth <= 600)
     const [greyFont, setGreyFont] = useState(false)
     const [newData, setNewdata] = useContext(dataContext)
     const [product, setProduct] = useState(false)
-    const router=useRouter()
-    useEffect(()=>{
-        const token=localStorage.getItem('access_token')
-        if(!token){
+    const router = useRouter()
+    useEffect(() => {    
+        const token = localStorage.getItem('access_token')
+        if (!token) {
             router.push('/')
         }
-    },[])
+    }, [])
     useEffect(() => {
         const handleResize = () => {
             const isSmall = window.innerWidth <= 600;
@@ -47,6 +47,7 @@ export default function AdminLayput({ children }) {
 
     const addButtonText = isSmallScreen ? '+' : '+ Add product';
     const hamburgerImg = useCallback(() => {
+
         if (display == false) {
             setGreyFont(true)
             setDisplay(true)
@@ -70,31 +71,33 @@ export default function AdminLayput({ children }) {
         }
     }, [display, isSmallScreen])
     const addProduct = useCallback(() => {
-        setNewdata({display:true,data:'Create Product'})
+        setNewdata({ display: true, data: 'Create Product' })
         setProduct(true)
         document.body.style.overflow = 'hidden';
     },)
-    const menuRef=useRef()
+    const menuRef = useRef()
     useEffect(() => {
-        if(isSmallScreen){
-        const handleClick = (event) => {
-          if (menuRef.current && !menuRef.current.contains(event.target)) {
-            setGreyFont(false)
-            setDisplay(false)
-            document.body.style.overflow = 'auto';
-          }
-        };
-    
-        document.addEventListener('mousedown', handleClick);
-    
-        return () => {
-          document.removeEventListener('mousedown', handleClick);
-        };
-    }else{
-        return
-    }
-      }, []);
+        if (isSmallScreen) {
+            const handleClick = (event) => {
+                if (menuRef.current && !menuRef.current.contains(event.target)) {
+                    setGreyFont(false)
+        setDisplay(false)
+                }
+            };
+            document.addEventListener('mousedown', handleClick);
 
+            return () => {
+                document.removeEventListener('mousedown', handleClick);
+            };
+        } else {
+            return
+        }
+    }, []);
+    const grayFunc = () => {
+        setGreyFont(false)
+        setDisplay(false)
+        // document.body.style.overflow = 'hidden';
+    }
     return (
         <>
             <header className={style.header} >
@@ -115,9 +118,9 @@ export default function AdminLayput({ children }) {
                 </div>
             </header>
             <div className={style.navDiv}>
-                <nav style={{ display: display ? 'block' : 'none' }} className={`${greyFont ? style.smallNav : style.navigation}`}>
+                <nav style={{ display:display?'block':'none' }} className={`${greyFont ? style.smallNav : style.navigation} ${style.grayNav}`}>
                     <div className={style.navContainer} ref={menuRef}>
-                        <Image style={{ display: isSmallScreen ? 'block' : 'none' }} onClick={back} className={style.back} alt='back' src={backImg} />
+                        <Image onClick={back} className={style.back} alt='back' src={backImg} />
                         <div style={{ backgroundColor: color == '/admin/panel' ? '#d172ee' : '#C74FEB' }}>
                             <Image alt='dashboard' src={dashboard} />
                             <Link onClick={back} className={style.linkNav} href='/admin/panel'>Dashboard</Link>
@@ -152,16 +155,12 @@ export default function AdminLayput({ children }) {
                         </div>
                     </div>
                 </nav>
-                <div style={{display:product?'block':'none'}}>
                     <Product type={'add product'} isSmallScreen={isSmallScreen} greyFont={greyFont} />
-                </div>
                 <div>
                     {children}
                 </div>
             </div>
-            <div style={{display:greyFont?'block':'none'}} className={style.gray}>
-                
-            </div>
+            {/* <div onClick={grayFunc} style={{ display: greyFont ? 'block' : 'none' }} className={style.gray}></div> */}
         </>
     )
 }

@@ -61,7 +61,7 @@ export default function Product({ isSmallScreen, greyFont }) {
             });
             setAddImg(null);
             setError({})
-            document.body.style.overflow = 'auto';
+            // document.body.style.overflow = 'auto';
         }
     };
     useEffect(() => {
@@ -467,7 +467,7 @@ export default function Product({ isSmallScreen, greyFont }) {
             <div style={{ display: newData.display ? 'block' : 'none' }} className={`${style.addContainer} ${newData ? style['sağdan-sola'] : ''}`}>
                 <div style={{ justifyContent: 'space-between', display: 'flex' }}>
                     <h2>{newData.data}</h2>
-                    <Image alt='exit' className={style.exit} onClick={exitFunction} style={{ display: isSmallScreen ? 'flex' : 'none' }} src={exit} />
+                    <Image alt='exit' className={style.exit} onClick={exitFunction} src={exit} />
                 </div>
                 {(newData?.data === 'Create Product' || newData?.data === 'Edit Product') && (
                     <div>
