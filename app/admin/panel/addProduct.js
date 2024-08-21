@@ -167,7 +167,7 @@ export default function Product({ isSmallScreen, greyFont }) {
                     setTimeout(async() => {
                         setAlertt(false);
                     }, 2000);
-                    await axios.post('/api/category', addData)
+                    await axios.post(`/api/category`, addData)
                         dispatch(addCategory(addData))
                     nameRef.current.value = ''
                     slugRef.current.value = ''
@@ -216,7 +216,7 @@ export default function Product({ isSmallScreen, greyFont }) {
                     setTimeout(async() => {
                         setAlertt(false);
                     }, 2000);
-                    await axios.post('/api/products', {
+                    await axios.post(`/api/products`, {
                         name: nameRef.current.value,
                         description: description.current.value,
                         img_url: addImg,
@@ -277,7 +277,7 @@ export default function Product({ isSmallScreen, greyFont }) {
                         
                         setAlertt(false);
                     }, 2000);
-                await axios.post('/api/restuarants', {
+                await axios.post(`/api/restuarants`, {
                     name: nameRef.current.value,
                     category_id: selectedValue,
                     cuisine: cuisine.current.value,
@@ -327,7 +327,7 @@ export default function Product({ isSmallScreen, greyFont }) {
                     errors.description = 'fill the description input'
                 }
                 if (Object.keys(errors).length === 0) {
-                    await axios.post('/api/offer', {
+                    await axios.post(`/api/offer`,{
                         name: nameRef.current.value,
                         description: description.current.value,
                         img_url: addImg,

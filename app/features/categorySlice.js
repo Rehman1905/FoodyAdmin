@@ -6,7 +6,7 @@ const { createSlice } = require("@reduxjs/toolkit")
 const { default: axios } = require("axios")
 const fetchCategories = async () => {
   try {
-    const response = await axios.get('/api/category');
+    const response = await axios.get(`/api/category`);
     const data = response.data.result.data
     return data
   } catch (error) {

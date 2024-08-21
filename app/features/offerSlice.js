@@ -5,7 +5,7 @@ import axios from "axios"
 
 const fetchOffer=async()=>{
     try{
-        const response=await axios.get('/api/offer')
+        const response=await axios.get(`/api/offer`)
         const dataOffer=response.data.result.data
         return dataOffer
     }catch(err){

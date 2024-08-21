@@ -5,7 +5,7 @@ import axios from "axios"
 
 const fetchRetuarant=async()=>{
     try{
-        const response=await axios.get('/api/restuarants')
+        const response=await axios.get(`/api/restuarants`)
         const dataRestuarant=response.data.result.data
         return dataRestuarant
     }catch(err){

@@ -8,22 +8,16 @@ import Image from 'next/image'
 import styleDelet from '../products/products.module.css'
 import { useCallback, useEffect, useState } from 'react'
 import axios from 'axios'
+import { useDispatch, useSelector } from 'react-redux'
 export default function OrderHistory() {
-    const [orders,setOrders]=useState([])
+    const [orders, setOrders] = useState([])
     const [spin, setSpin] = useState(true)
+    const dispatch = useDispatch()
+    const dataHistory = useSelector(state => state.history.data)
     useEffect(() => {
 
-        const authorization = localStorage.getItem('access_token');
-
         const fetchOrders = async () => {
-
-            const response = await axios.get('/api/order/history', {
-                headers: {
-                    Authorization: `Bearer ${authorization}`
-                }
-            });
-            console.log(response)
-            setOrders(response);
+            await dataHistory.then(result => setOrders(result))
             setSpin(false)
         }
         fetchOrders()
@@ -37,6 +31,18 @@ export default function OrderHistory() {
         setDelet(false)
         document.body.style.overflow = 'auto'
     }, [])
+    orders.forEach(order => {
+        const date = new Date(order.created * 1000); // Timestamp-i tarixi obyektə çeviririk
+        const formattedDate = date.toLocaleDateString('en-US', {
+            year: 'numeric',
+            month: 'short',
+            day: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit'
+        });
+        console.log(`Order ID: ${order.id}, Date: ${formattedDate}`);
+    });
+
     return (
         <>
             <section className={style.sec} style={{ display: spin ? 'none' : 'flex' }}>
@@ -54,17 +60,26 @@ export default function OrderHistory() {
                         </tr>
                     </thead>
                     <tbody>
-                        {orders.data?.result.data?.map((order, index) => (
-                            <tr key={index}>
-                                <td>{index + 1}</td>
-                                <td>{order.customer_id}</td>
-                                <td>{orders.headers.date.slice(4, 16)}</td>
-                                <td style={{ maxWidth: '200px' }}>{order.delivery_address}</td>
-                                <td>{order.amount}</td>
-                                <td>{order.payment_method == 0 ? 'Cash On Delivery' : 'Pay at the door by credit card'}</td>
-                                <td>{order.contact}</td>
-                            </tr>
-                        ))}
+                        {orders.map((order, index) => {
+                            const date = new Date(order.created * 1000); // Timestamp-i tarixi obyektə çeviririk
+                            const day = String(date.getDate()).padStart(2, '0');
+                            const month = String(date.getMonth() + 1).padStart(2, '0');
+                            const year = '2024';
+
+                            const formattedDate = `${day}/${month}/${year}`;
+
+                            return (
+                                <tr key={index}>
+                                    <td>{index + 1}</td>
+                                    <td>{order.customer_id}</td>
+                                    <td>{formattedDate}</td>
+                                    <td style={{ maxWidth: '200px' }}>{order.delivery_address}</td>
+                                    <td>{order.amount}</td>
+                                    <td>{order.payment_method == 0 ? 'Cash On Delivery' : 'Pay at the door by credit card'}</td>
+                                    <td>{order.contact}</td>
+                                </tr>
+                            )
+                        })}
                     </tbody>
                 </table>
             </section>

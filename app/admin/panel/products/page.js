@@ -92,7 +92,13 @@ export default function Products() {
         setResDeletID(id)
         document.body.style.overflow = 'hidden'
     }, [])
-    const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth <= 600)
+    const [isSmallScreen, setIsSmallScreen] = useState(false)
+
+    useEffect(()=>{
+        if(window){
+            setIsSmallScreen(window.innerWidth <= 600)
+        }
+    })
     const cancelBtn = useCallback(() => {
         setDelet(false)
         document.body.style.overflow = 'auto'

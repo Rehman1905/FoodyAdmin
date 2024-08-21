@@ -9,6 +9,8 @@ import styleDelet from '../products/products.module.css'
 import { useCallback, useEffect, useState } from 'react'
 import axios from 'axios'
 import spinGif from '../image/spin.gif'
+import { useDispatch, useSelector } from 'react-redux'
+import { deleteOrderData } from '../../../features/orderSlice'
 export default function Orders() {
     const [orders, setOrders] = useState([])
     const [deletId, setDeletId] = useState('')
@@ -17,20 +19,16 @@ export default function Orders() {
         display: false,
         data: []
     })
-    const authorization = localStorage.getItem('access_token');
-
-    const fetchOrders = async () => {
-        const response = await axios.get('/api/order', {
-            headers: {
-                Authorization: `Bearer ${authorization}`
-            }
-        });
-        setSpin(false)
-        setOrders(response);
-    }
+    const dispatch = useDispatch()
+    const dataOrders = useSelector(state => state.orders.data)
     useEffect(() => {
-        fetchOrders()
-    }, [])
+        const fetchOrder = async () => {
+            await dataOrders.then(result => setOrders(result))
+            setSpin(false)
+        }
+        fetchOrder()
+
+    }, [dataOrders])
     const [delet, setDelet] = useState(false)
     const deleteBtn = useCallback((id) => {
         setDeletId(id)
@@ -51,7 +49,7 @@ export default function Orders() {
     const deleteOrder = useCallback(async () => {
         setSpin(true)
         setDelet(false)
-        await axios.delete('/api/order', {
+        await axios.delete(`/api/order`, {
             headers: {
                 Authorization: `Bearer ${authorization}`
             },
@@ -59,8 +57,8 @@ export default function Orders() {
                 order_id: deletId
             }
         });
-        fetchOrders();
-    }, [authorization]);
+        dispatch(deleteOrderData())
+    }, [deletId]);
     return (
         <>
             <section className={style.sec} style={{ display: spin ? 'none' : 'flex' }} >
@@ -78,11 +76,18 @@ export default function Orders() {
                         </tr>
                     </thead>
                     <tbody>
-                        {orders.data?.result.data?.map((order, index) => (
+                        {orders?.map((order, index) => {
+                            const date = new Date(order.created * 1000); 
+                            const day = String(date.getDate()).padStart(2, '0');
+                            const month = String(date.getMonth() + 1).padStart(2, '0');
+                            const year = '2024';
+
+                            const formattedDate = `${day}/${month}/${year}`;
+                            return(
                             <tr key={index}>
                                 <td>{index + 1}</td>
                                 <td>{order.customer_id}</td>
-                                <td>{orders.headers.date.slice(4, 16)}</td>
+                                <td>{formattedDate}</td>
                                 <td style={{ maxWidth: '200px' }}>{order.delivery_address}</td>
                                 <td>{order.amount}</td>
                                 <td>{order.payment_method == 0 ? 'Cash On Delivery' : 'Pay at the door by credit card'}</td>
@@ -92,7 +97,8 @@ export default function Orders() {
                                     <Image onClick={() => deleteBtn(order.id)} className={style.bin} src={bin} alt="Bin Icon" width={20} height={20} />
                                 </td>
                             </tr>
-                        ))}
+                            )}
+                        )}
                     </tbody>
                 </table>
             </section>

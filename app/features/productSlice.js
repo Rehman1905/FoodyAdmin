@@ -3,7 +3,7 @@ import {createSlice} from '@reduxjs/toolkit'
 import axios from 'axios'
 const fetchProduct=async()=>{
     try{
-        const response=await axios.get('/api/products')
+        const response=await axios.get(`/api/products`)
         const dataProduct=response.data.result.data
         return dataProduct
     }catch(err){

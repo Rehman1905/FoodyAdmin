@@ -21,8 +21,10 @@ export default function Login() {
     const password = useRef()
     const router = useRouter()
     useEffect(() => {
+        if(typeof window!=='undefined'){
         localStorage.setItem('refresh_token', refreshToken)
         localStorage.setItem('access_token', accessToken)
+        }
     }, [refreshToken, accessToken])
     const signInBtn = useCallback(async (e) => {
         e.preventDefault()
@@ -35,7 +37,7 @@ export default function Login() {
         }
         if (Object.keys(errors).length === 0) {
             try {
-                const response = await axios.post('/api/auth/signin', {
+                const response = await axios.post(`/api/auth/signin`, {
                     email: userName.current.value,
                     password: password.current.value
                 })

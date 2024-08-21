@@ -23,7 +23,7 @@ export default function Restuarants() {
     },[dataRestuarant])
 
     const [newData, setNewData] = useContext(dataContext);
-    // const [isSmallScreen, setIsSmallScreen] = useState(false);
+    const [isSmallScreen, setIsSmallScreen] = useState(false);
     const [delet, setDelet] = useState(false);
     const [restuarant,setRestuarant]=useState(false)
     const [deleteRestuarant,setDeleteRestuarant]=useState('')
@@ -32,18 +32,22 @@ export default function Restuarants() {
         setOption(e.target.value)
     }
     const dispatch=useDispatch()
-    // useEffect(() => {
-    //     const handleResize = () => {
-    //         setIsSmallScreen(window.innerWidth <= 600);
-    //     };
+    useEffect(() => {
+        if(window){
 
-    //     window.addEventListener('resize', handleResize);
-    //     handleResize();
+        
+        const handleResize = () => {
+            setIsSmallScreen(window.innerWidth <= 600);
+        };
 
-    //     return () => {
-    //         window.removeEventListener('resize', handleResize);
-    //     };
-    // }, []);
+        window.addEventListener('resize', handleResize);
+        handleResize();
+
+        return () => {
+            window.removeEventListener('resize', handleResize);
+        };
+    }
+    }, []);
 
     const addRestuarant = useCallback(() => {
         setNewData({

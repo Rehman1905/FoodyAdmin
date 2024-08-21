@@ -17,22 +17,26 @@ import { useCallback, useContext, useEffect, useRef, useState } from 'react';
 import Product from './addProduct';
 import { dataContext } from '../../context/context';
 
-
 export default function AdminLayput({ children }) {
     const color = usePathname()
-    const [display, setDisplay] = useState(window.innerWidth >= 600);
-    const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth <= 600)
+    const [display, setDisplay] = useState(false);
+    const [isSmallScreen, setIsSmallScreen] = useState(false)
     const [greyFont, setGreyFont] = useState(false)
     const [newData, setNewdata] = useContext(dataContext)
     const [product, setProduct] = useState(false)
     const router = useRouter()
-    useEffect(() => {    
+    useEffect(() => {  
+        if(window){
+            setDisplay(window.innerWidth >= 600)
+            setIsSmallScreen(window.innerWidth <= 600)
+        }  
         const token = localStorage.getItem('access_token')
         if (!token) {
             router.push('/')
         }
     }, [])
     useEffect(() => {
+        if(window){
         const handleResize = () => {
             const isSmall = window.innerWidth <= 600;
             setIsSmallScreen(isSmall);
@@ -43,6 +47,7 @@ export default function AdminLayput({ children }) {
         return () => {
             window.removeEventListener('resize', handleResize);
         };
+    }
     }, [])
 
     const addButtonText = isSmallScreen ? '+' : '+ Add product';
@@ -155,12 +160,12 @@ export default function AdminLayput({ children }) {
                         </div>
                     </div>
                 </nav>
-                    <Product type={'add product'} isSmallScreen={isSmallScreen} greyFont={greyFont} />
+                    <Product type={'add product'} isSmallScreen={isSmallScreen}  />
                 <div>
                     {children}
                 </div>
             </div>
-            {/* <div onClick={grayFunc} style={{ display: greyFont ? 'block' : 'none' }} className={style.gray}></div> */}
+            <div onClick={grayFunc} style={{ display: greyFont ? 'block' : 'none' }} className={style.gray}></div>
         </>
     )
 }
